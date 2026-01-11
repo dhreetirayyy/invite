@@ -2,78 +2,114 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Event Invitation</title>
+<title>Private Invitation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: #f2f4f7;
   margin: 0;
-  padding: 0;
 }
 .container {
-  max-width: 500px;
+  max-width: 600px;
+  margin: 30px auto;
   background: white;
-  margin: 40px auto;
   padding: 25px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 h1 {
   text-align: center;
 }
-p {
-  text-align: center;
-  color: #555;
+label {
+  font-weight: bold;
+  margin-top: 15px;
+  display: block;
 }
-input, select, textarea, button {
+input, textarea, button {
   width: 100%;
   padding: 10px;
-  margin-top: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  margin-top: 6px;
 }
 button {
-  background: #007bff;
+  background: #2563eb;
   color: white;
+  border: none;
+  border-radius: 6px;
   font-size: 16px;
-  cursor: pointer;
+  margin-top: 20px;
 }
-button:hover {
-  background: #0056b3;
+img {
+  max-width: 100%;
+  margin-top: 15px;
+  border-radius: 8px;
 }
 .footer {
   text-align: center;
   font-size: 12px;
-  color: #888;
-  margin-top: 15px;
+  color: #666;
+  margin-top: 20px;
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
-  <h1>You're Invited 🎉</h1>
-  <p>Please let us know if you can make it</p>
+  <h1 id="eventTitle">You're Invited 🎉</h1>
 
-  <form action="mailto:dkumar.deo@gmail.com" method="POST" enctype="text/plain">
-    <input type="text" name="Name" placeholder="Your Name" required>
-    <input type="email" name="Email" placeholder="Your Email (optional)">
+  <label>Event Name</label>
+  <input type="text" id="eventName" placeholder="Birthday / Puja / Get Together">
+
+  <label>Date & Time</label>
+  <input type="text" id="eventDate" placeholder="March 20, 6:00 PM">
+
+  <label>Location</label>
+  <input type="text" id="eventLocation" placeholder="Address or Google Maps link">
+
+  <label>Invitation Image</label>
+  <input type="file" accept="image/*" onchange="previewImage(event)">
+
+  <img id="preview">
+
+  <hr>
+
+  <!-- GOOGLE FORM SUBMIT -->
+  <form action="PASTE_GOOGLE_FORM_ACTION_URL_HERE" method="POST" target="_blank">
+    <input type="hidden" name="entry.1111111111" id="gf_event">
     
-    <select name="Attendance" required>
-      <option value="">Will you attend?</option>
-      <option value="Yes">Yes, I will attend</option>
-      <option value="No">Sorry, can't make it</option>
-    </select>
+    <label>Your Name</label>
+    <input name="entry.2222222222" required>
 
-    <textarea name="Message" placeholder="Message or dietary notes (optional)"></textarea>
+    <label>Email (optional)</label>
+    <input name="entry.3333333333" type="email">
 
-    <button type="submit">Submit RSVP</button>
+    <label>Will you attend?</label>
+    <input name="entry.4444444444" placeholder="Yes / No" required>
+
+    <label>Message</label>
+    <textarea name="entry.5555555555"></textarea>
+
+    <button onclick="syncEvent()">Submit RSVP</button>
   </form>
 
   <div class="footer">
     Your information is used only for this event.
   </div>
 </div>
+
+<script>
+function previewImage(event) {
+  const img = document.getElementById('preview');
+  img.src = URL.createObjectURL(event.target.files[0]);
+}
+
+function syncEvent() {
+  const name = document.getElementById("eventName").value;
+  document.getElementById("gf_event").value = name;
+}
+</script>
+
 </body>
 </html>
